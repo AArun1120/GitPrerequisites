@@ -14,7 +14,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 
-public class BlobIndexTest {
+public class Tester {
     
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
@@ -40,7 +40,7 @@ public class BlobIndexTest {
     @Test
     @DisplayName("Magicks a blob from nowhere")
     public void testBlub() throws Exception{
-        BlobIndex.Blob blub = new BlobIndex.Blob("asdf.txt");
+        Blob blub = new Blob("asdf.txt");
         blub.writeToDisk();
         File file2 = new File("./objects/"+blub.getSHA1());
         assertTrue(file2.exists());
@@ -58,7 +58,7 @@ public class BlobIndexTest {
     @Test
     @DisplayName("initializes the index")
     public void testInit(){
-        BlobIndex.Index index = new BlobIndex.Index();
+        Index index = new Index();
         index.init();
         File file3 = new File("index");
         assertTrue(file3.exists());
@@ -70,19 +70,20 @@ public class BlobIndexTest {
     @DisplayName("adds a blob")
     public void testAdd() throws IOException{
         StringBuilder bob = new StringBuilder();
-        BlobIndex.Index indy = new BlobIndex.Index();
+        Index indy = new Index();
         BufferedReader br3 = new BufferedReader(new FileReader("index"));
         while(br3.ready()){
-              bob.append(br3.readLine()+"\n");
+            bob.append(br3.readLine()+"\n");
         }
+
         br3.close();
-        BlobIndex.Blob b = new BlobIndex.Blob("ghjk.txt");
-        bob.append("ghjk.txt : "+b.getSHA1()+"\n");
-        indy.addBlob(new BlobIndex.Blob("ghjk.txt"), "ghjk.txt");
+        Blob b = new Blob("ghjk.txt");
+        bob.append("ghjk.txt:"+b.getSHA1()+"\n");
+        indy.addBlob(new Blob("ghjk.txt"), "ghjk.txt");
         StringBuilder idk = new StringBuilder();
         BufferedReader br4 = new BufferedReader(new FileReader("index"));
         while(br4.ready()){
-              idk.append(br4.readLine()+"\n");
+            idk.append(br4.readLine()+"\n");
         }
         br4.close();
         assertEquals(bob.toString(),idk.toString());
