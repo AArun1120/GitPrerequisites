@@ -22,7 +22,7 @@ public class Tester {
         FileWriter fw = new FileWriter(file);
         fw.write("asdf");
         fw.close();
-        File file2 = new File("ghk.txt");
+        File file2 = new File("ghjk.txt");
         FileWriter fw2 = new FileWriter(file2);
         fw2.write("ghjk");
         fw2.close();
@@ -30,11 +30,11 @@ public class Tester {
 
     @AfterAll
     static void tearDownAfterClass() throws Exception {
-        /*
-         * Utils.deleteFile("junit_example_file_data.txt");
-         * Utils.deleteFile("index");
-         * Utils.deleteDirectory("objects");
-         */
+        Files.deleteIfExists(Paths.get("asdf.txt"));
+        Files.deleteIfExists(Paths.get("ghjk.txt"));
+        Files.deleteIfExists(Paths.get("index"));
+        Files.deleteIfExists(Paths.get("./objects/"));
+
     }
     
     @Test
@@ -89,5 +89,20 @@ public class Tester {
         assertEquals(bob.toString(),idk.toString());
     }
 
+    @Test
+    @DisplayName("tests tree methods")
+    public void testTree() throws Exception{
+        Tree tree = new Tree();
+        String str = "blob : "+Blob.sha1Hash("asdf")+" : asdf.txt";
+        tree.add(str);
+        tree.add("blob : "+Blob.sha1Hash("ghjk")+" : ghjk.txt");
+        tree.remove("ghjk.txt");
+        tree.writeToFile();
+        assertTrue(Files.exists(Paths.get("./objects/"+Blob.sha1Hash(str))));
+        BufferedReader br = new BufferedReader(new FileReader("./objects/"+Blob.sha1Hash(str)));
+        String str2 = br.readLine();
+        br.close();
+        assertEquals(str,str2);
+    }
 
 }
