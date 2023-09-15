@@ -1,0 +1,100 @@
+[
+    {
+        "className": "BlobIndex",
+        "constructorConfigs": null,
+        "methodConfigs": [
+            {
+                "methodName": "sha1Hash",
+                "parameters": ["String"],
+                "values": ["String"]
+            }
+        ]
+    },
+    {
+        "className": "Blob",
+        "constructorConfigs": [
+            {
+                "parameterTypes": [
+                    "String"
+                ]
+            }
+        ],
+        "methodConfigs": [
+            {
+                "methodName": "getSHA1",
+                "parameters": null,
+                "values": ["String"]
+            },
+            {
+                "methodName":"writeToDisk",
+                "parameters":null,
+                "values":null
+            },
+            {
+                "methodName":"readFileContent",
+                "parameters":["String"],
+                "values":["String"]
+            },
+            {
+                "methodName":"readFileBytes",
+                "parameters":["String"],
+                "values":["byte[]"]
+            }
+        ]
+    },
+    {
+        "className": "Index",
+        "constructorConfigs": null,
+        "methodConfigs":[
+            {
+                "methodName": "init",
+                "parameterTypes": null,
+                "values": null
+            },
+            {
+                "methodName": "addBlob",
+                "parameterTypes": [
+                    "Blob",
+                    "String"
+                ],
+                "values": null
+            },
+            {
+                "methodName": "removeBlob",
+                "parameterTypes": [
+                    "String"
+                ],
+                "values": null
+            },
+            {
+                "methodName": "appendToFile",
+                "parameterTypes": [
+                    "String", 
+                    "String"
+                ],
+                "values": null
+            },
+            {
+                "methodName": "readLinesFromFile",
+                "parameterTypes":[
+                    "String"
+                ],
+                "values":[
+                    "List<String>"
+                ]
+            },
+            {
+                "methodName": "writeLinesToFile",
+                "parameterTypes":[
+                    "String",
+                    "List<String>"
+                ],
+                "values":[
+                    "String",
+                    "List<String>"
+                ]
+            }
+        ]
+    }
+]
+
