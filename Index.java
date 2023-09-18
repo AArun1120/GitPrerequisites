@@ -37,7 +37,7 @@ public class Index {
             List<String> updatedLines = new ArrayList<>();
 
             for (String line : lines) {
-                if (!line.startsWith(originalFilename + " : ")) {
+                if (!line.startsWith(originalFilename + ":")) {//removed space around colon for consistency
                     updatedLines.add(line);
                 }
             }
@@ -79,5 +79,4 @@ public class Index {
                 e.printStackTrace();
             }
         }
-        
     }
