@@ -15,7 +15,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 
-public class Tester {
+public class IndexTester {
     
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
@@ -39,26 +39,16 @@ public class Tester {
     }
     
     @Test
-    @DisplayName("Magicks a blob from nowhere")
-    public void testBlob() throws Exception{
-        Blob blub = new Blob("asdf.txt");
-        blub.writeToDisk();
-        File file2 = new File("./objects/"+blub.getSHA1());
-        assertTrue(file2.exists());//tests if the blob exists
-        String str = blub.readFileContent("./objects/"+blub.getSHA1());
-        String str2 = "asdf";
-        assertEquals(str,str2);//tests if the contents of the blob are equal to the contents of the file
-    }
-
-    @Test
     @DisplayName("initializes the index file and objects folder")
     public void testInit(){
         Index index = new Index();
         index.init();
         File file3 = new File("index");
-        assertTrue(file3.exists());//tests if index exists
+        // tests if index file has been created
+        assertTrue(file3.exists());
         Path path = Paths.get("./objects/");
-        assertTrue(Files.exists(path));// tests if objects exists
+        // tests if ''objects'' folder has been created
+        assertTrue(Files.exists(path));
     }
 
     @Test
@@ -81,14 +71,8 @@ public class Tester {
             idk.append(br4.readLine()+"\n");
         }
         br4.close();
-        assertEquals(bob.toString(),idk.toString());//bob is the entry we put in and idk is the contents of the file. Since we only put in ghjk, they should be equal
-    }
-
-    @Test
-    @DisplayName("gets sha for blob")
-    public void testSha() throws Exception{
-        Blob b = new Blob("asdf.txt");
-        assertEquals("3da541559918a808c2402bba5012f6c60b27661c",b.getSHA1());// the first string is the sha1 code for asdf according to 4 different websites
+        // tests if the index added the blob
+        assertEquals(bob.toString(),idk.toString());
     }
 
     @Test
@@ -104,7 +88,8 @@ public class Tester {
         }
         br.close();
         String str2 = "asdf.txt:3da541559918a808c2402bba5012f6c60b27661c";
-        assertEquals(str,str2);//tests if the index contents equal the entry string
+        // tests if the index added the file
+        assertEquals(str,str2);
         
     }
 
@@ -133,7 +118,8 @@ public class Tester {
             indexString+=br5.readLine();
         }
         br5.close();
-        assertEquals(checkString,indexString);// tests if the index removed the last file
+        // tests if the index removed the last file
+        assertEquals(checkString,indexString);
     }
 
     @Test
@@ -153,23 +139,8 @@ public class Tester {
             read+=br.read();
         }
         br.close();
-        assertEquals(str,read);//the index should be empty, so we test for that
-    }
-
-    @Test
-    @DisplayName("tests tree methods")
-    public void testTree() throws Exception{
-        Tree tree = new Tree();
-        String str = "blob : "+Blob.sha1Hash("asdf")+" : asdf.txt";
-        tree.add(str);
-        tree.add("blob : "+Blob.sha1Hash("ghjk")+" : ghjk.txt");
-        tree.remove("ghjk.txt");
-        tree.writeToFile();
-        assertTrue(Files.exists(Paths.get("./objects/"+Blob.sha1Hash(str))));//tests if the file exists
-        BufferedReader br = new BufferedReader(new FileReader("./objects/"+Blob.sha1Hash(str)));
-        String str2 = br.readLine();
-        br.close();
-        assertEquals(str,str2);//tests if the tree can add and remove files
+        //the index should be empty, so we test for that
+        assertEquals(str,read);
     }
 
 }
