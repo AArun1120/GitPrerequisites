@@ -45,14 +45,8 @@ public class Tester {
         blub.writeToDisk();
         File file2 = new File("./objects/"+blub.getSHA1());
         assertTrue(file2.exists());//tests if the blob exists
-        BufferedReader br = new BufferedReader(new FileReader(file2));
-        String str = "";
-        while(br.ready()){str+=br.read();}
-        br.close();
-        BufferedReader br2 = new BufferedReader(new FileReader("asdf.txt"));
-        String str2 = "";
-        while(br2.ready()){str+=br2.read();}
-        br2.close();
+        String str = blub.readFileContent("./objects/"+blub.getSHA1());
+        String str2 = "asdf";
         assertEquals(str,str2);//tests if the contents of the blob are equal to the contents of the file
     }
 
@@ -92,7 +86,7 @@ public class Tester {
 
     @Test
     @DisplayName("gets sha for blob")
-    public void testSha() throws RuntimeException{
+    public void testSha() throws Exception{
         Blob b = new Blob("asdf.txt");
         assertEquals("3da541559918a808c2402bba5012f6c60b27661c",b.getSHA1());// the first string is the sha1 code for asdf according to 4 different websites
     }
@@ -109,7 +103,7 @@ public class Tester {
             str+=br.readLine();
         }
         br.close();
-        String str2 = "asdf:3da541559918a808c2402bba5012f6c60b27661c";
+        String str2 = "asdf.txt:3da541559918a808c2402bba5012f6c60b27661c";
         assertEquals(str,str2);//tests if the index contents equal the entry string
         
     }
