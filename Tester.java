@@ -44,7 +44,7 @@ public class Tester {
         Blob blub = new Blob("asdf.txt");
         blub.writeToDisk();
         File file2 = new File("./objects/"+blub.getSHA1());
-        assertTrue(file2.exists());
+        assertTrue(file2.exists());//tests if the blob exists
         BufferedReader br = new BufferedReader(new FileReader(file2));
         String str = "";
         while(br.ready()){str+=br.read();}
@@ -53,7 +53,7 @@ public class Tester {
         String str2 = "";
         while(br2.ready()){str+=br2.read();}
         br2.close();
-        assertEquals(str,str2);
+        assertEquals(str,str2);//tests if the contents of the blob are equal to the contents of the file
     }
 
     @Test
@@ -87,7 +87,7 @@ public class Tester {
             idk.append(br4.readLine()+"\n");
         }
         br4.close();
-        assertEquals(bob.toString(),idk.toString());
+        assertEquals(bob.toString(),idk.toString());//bob is the entry we put in and idk is the contents of the file. Since we only put in ghjk, they should be equal
     }
 
     @Test
@@ -108,8 +108,9 @@ public class Tester {
         while(br.ready()){
             str+=br.readLine();
         }
+        br.close();
         String str2 = "asdf:3da541559918a808c2402bba5012f6c60b27661c";
-        assertEquals(str,str2);
+        assertEquals(str,str2);//tests if the index contents equal the entry string
         
     }
 
@@ -138,12 +139,13 @@ public class Tester {
             indexString+=br5.readLine();
         }
         br5.close();
-        assertEquals(checkString,indexString);
+        assertEquals(checkString,indexString);// tests if the index removed the last file
     }
 
     @Test
     @DisplayName("Good luck")
     public void testChaos() throws IOException{
+        Files.deleteIfExists(Paths.get("index"));
         Index i = new Index();
         i.addBlob(new Blob("1.txt"),"1.txt");
         i.addBlob(new Blob("2.txt"), "2.txt");
@@ -152,12 +154,12 @@ public class Tester {
         i.removeBlob("2.txt");
         String str = "";
         BufferedReader br = new BufferedReader(new FileReader("index"));
-        br.close();
         String read = "";
         while(br.ready()){
             read+=br.read();
         }
-        assertEquals(str,read);
+        br.close();
+        assertEquals(str,read);//the index should be empty, so we test for that
     }
 
     @Test
@@ -169,11 +171,11 @@ public class Tester {
         tree.add("blob : "+Blob.sha1Hash("ghjk")+" : ghjk.txt");
         tree.remove("ghjk.txt");
         tree.writeToFile();
-        assertTrue(Files.exists(Paths.get("./objects/"+Blob.sha1Hash(str))));
+        assertTrue(Files.exists(Paths.get("./objects/"+Blob.sha1Hash(str))));//tests if the file exists
         BufferedReader br = new BufferedReader(new FileReader("./objects/"+Blob.sha1Hash(str)));
         String str2 = br.readLine();
         br.close();
-        assertEquals(str,str2);
+        assertEquals(str,str2);//tests if the tree can add and remove files
     }
 
 }
